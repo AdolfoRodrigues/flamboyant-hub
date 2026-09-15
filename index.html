@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hub de Dashboards — Flamboyant Urbanismo</title>
+<style>
+:root{
+  --bg:#f6f5f2;
+  --surface:#ffffff;
+  --border:#e2ded4;
+  --ink:#22201b;
+  --ink-soft:#65605a;
+  --accent:#a5591f;
+  --accent-soft:#f1e2d3;
+  --track:#ece8de;
+  --warn:#b83b3b;
+  --warn-soft:#f7e3e0;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17150f; --surface:#211e17; --border:#3a352b;
+    --ink:#f1ede3; --ink-soft:#a89f8f; --accent:#e08a45;
+    --accent-soft:#3a2a1a; --track:#2c2820; --warn:#e0685f; --warn-soft:#3a1f1c;
+  }
+}
+*{box-sizing:border-box;}
+html,body{margin:0;}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:'Public Sans', system-ui, -apple-system, "Segoe UI", sans-serif;
+  padding-inline:20px; padding-block:32px;
+}
+.wrap{max-width:960px;margin-inline:auto;}
+.eyebrow{
+  font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em;
+  color:var(--accent); font-weight:600; margin:0 0 6px;
+}
+h1{
+  font-family:'Fraunces', Georgia, serif; font-weight:600;
+  font-size:clamp(1.6rem,4vw,2.3rem); letter-spacing:-0.01em; margin:0 0 6px; text-wrap:balance;
+}
+.subtitle{color:var(--ink-soft); font-size:0.95rem; margin:0 0 28px; max-width:60ch;}
+[hidden]{display:none!important;}
+img{max-width:100%;}
+
+/* HUB VIEW */
+.cards{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px;
+}
+.card{
+  background:var(--surface); border:1px solid var(--border); border-radius:14px;
+  padding:20px; display:flex; flex-direction:column; gap:12px; text-align:left;
+  cursor:pointer; font:inherit; color:inherit;
+}
+.card:hover{border-color:var(--accent);}
+.card:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+.card-top{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
+.card h2{font-family:'Fraunces', Georgia, serif; font-size:1.2rem; font-weight:600; margin:0;}
+.tag{
+  font-size:0.65rem; text-transform:uppercase; letter-spacing:0.05em; font-weight:700;
+  padding:3px 8px; border-radius:20px; white-space:nowrap;
+}
+.tag-autodoc{background:var(--accent-soft); color:var(--accent);}
+.tag-construflow{background:var(--warn-soft); color:var(--warn);}
+.card p{margin:0; font-size:0.85rem; color:var(--ink-soft); flex:1;}
+.card-nums{display:flex; gap:22px;}
+.card-nums .num{font-family:'Fraunces', Georgia, serif; font-size:1.5rem; color:var(--ink); font-variant-numeric:tabular-nums;}
+.card-nums .lbl{font-size:0.68rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-soft); margin-top:2px;}
+.card-cta{font-size:0.82rem; color:var(--accent); font-weight:600;}
+.card-add{
+  border:1px dashed var(--border); background:transparent; align-items:center; justify-content:center;
+  color:var(--ink-soft); font-size:0.85rem; min-height:150px;
+}
+footer{color:var(--ink-soft); font-size:0.78rem; margin-top:26px;}
+
+/* PANEL VIEWS */
+.back-btn{
+  background:none; border:none; color:var(--ink-soft); font:inherit; font-size:0.85rem;
+  cursor:pointer; padding:0; margin-bottom:18px; display:inline-flex; align-items:center; gap:6px;
+}
+.back-btn:hover{color:var(--accent);}
+.kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:28px;}
+.kpi{background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px 18px;}
+.kpi .num{font-family:'Fraunces', Georgia, serif; font-size:1.9rem; font-variant-numeric:tabular-nums; color:var(--accent); line-height:1.1;}
+.kpi.warn .num{color:var(--warn);}
+.kpi .label{font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); margin-top:4px;}
+.client-block{margin-bottom:22px; background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden;}
+.client-head{display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:16px 20px; border-bottom:1px solid var(--border); flex-wrap:wrap;}
+.client-head h3{font-family:'Fraunces', Georgia, serif; font-size:1.1rem; font-weight:600; margin:0;}
+.client-meta{font-size:0.8rem; color:var(--ink-soft); font-variant-numeric:tabular-nums;}
+.table-wrap{overflow-x:auto;}
+table{width:100%; border-collapse:collapse; font-size:0.88rem;}
+th{text-align:left; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-soft); font-weight:600; padding:10px 20px 8px;}
+th.num, td.num{text-align:right;}
+td{padding:9px 20px; border-top:1px solid var(--border); font-variant-numeric:tabular-nums;}
+tr:first-child td{border-top:none;}
+.bar-cell{display:flex; align-items:center; gap:10px; justify-content:flex-end;}
+.bar-track{flex:1; height:6px; border-radius:3px; background:var(--track); overflow:hidden; min-width:60px; max-width:140px;}
+.bar-fill{height:100%; border-radius:3px; background:var(--accent);}
+.bar-fill.warn{background:var(--warn);}
+.doc-count{min-width:56px; text-align:right;}
+.acronym{display:inline-block; font-size:0.68rem; padding:2px 6px; border-radius:5px; background:var(--accent-soft); color:var(--accent); font-weight:600; margin-right:8px; letter-spacing:0.02em;}
+.status-pill{display:inline-block; font-size:0.65rem; padding:2px 7px; border-radius:20px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; margin-left:8px;}
+.status-active{background:var(--accent-soft); color:var(--accent);}
+.status-inactive{background:var(--track); color:var(--ink-soft);}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Public+Sans:wght@400;500;600&display=swap">
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HUB VIEW -->
+  <section id="view-hub">
+    <p class="eyebrow">Flamboyant Urbanismo</p>
+    <h1>Hub de Dashboards</h1>
+    <p class="subtitle">Ponto único de acesso aos painéis das ferramentas de projeto e obra. Clique em um card para abrir o painel completo.</p>
+
+    <div class="cards">
+      <button class="card" onclick="goTo('autodoc')">
+        <div class="card-top"><h2>Autodoc</h2><span class="tag tag-autodoc">GED</span></div>
+        <p>Quantidade de projetos cadastrados em cada obra no Autodoc.</p>
+        <div class="card-nums">
+          <div><div class="num">2</div><div class="lbl">Obras</div></div>
+          <div><div class="num">8</div><div class="lbl">Projetos</div></div>
+        </div>
+        <div class="card-cta">Abrir painel →</div>
+      </button>
+
+      <button class="card" onclick="goTo('construflow')">
+        <div class="card-top"><h2>Construflow</h2><span class="tag tag-construflow">Pendências</span></div>
+        <p>Pendências abertas e atrasadas por obra no Construflow.</p>
+        <div class="card-nums">
+          <div><div class="num">3.808</div><div class="lbl">Pendências</div></div>
+          <div><div class="num">1.196</div><div class="lbl">Atrasadas</div></div>
+        </div>
+        <div class="card-cta">Abrir painel →</div>
+      </button>
+
+      <button class="card card-add" disabled>+ Próximo painel entra aqui</button>
+    </div>
+
+    <footer>Painéis mantidos e atualizados via Claude · dados de Autodoc e Construflow · última atualização 15/09/2026</footer>
+  </section>
+
+  <!-- AUTODOC PANEL -->
+  <section id="view-autodoc" hidden>
+    <button class="back-btn" onclick="goTo('hub')">← Hub de dashboards</button>
+    <p class="eyebrow">Autodoc · GED</p>
+    <h1>Projetos por Obra</h1>
+    <p class="subtitle">Levantamento de projetos e documentos por cliente no Autodoc.</p>
+
+    <div class="kpis">
+      <div class="kpi"><div class="num">2</div><div class="label">Obras</div></div>
+      <div class="kpi"><div class="num">8</div><div class="label">Projetos</div></div>
+      <div class="kpi"><div class="num">20.197</div><div class="label">Documentos</div></div>
+    </div>
+
+    <div class="client-block">
+      <div class="client-head"><h3>Flamboyant Urbanismo</h3><span class="client-meta">7 projetos · 20.195 documentos</span></div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Projeto</th><th class="num">Documentos</th></tr></thead>
+        <tbody>
+          <tr><td><span class="acronym">C18</span>1 - C18</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="doc-count">17.490</span></div></td></tr>
+          <tr><td><span class="acronym">C08</span>2 - C08</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:10.3%"></div></div><span class="doc-count">1.801</span></div></td></tr>
+          <tr><td><span class="acronym">G05</span>3 - G05</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:4.8%"></div></div><span class="doc-count">846</span></div></td></tr>
+          <tr><td><span class="acronym">EXP</span>5 - Expansão Flamboyant Shopping</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.3%"></div></div><span class="doc-count">40</span></div></td></tr>
+          <tr><td><span class="acronym">C06</span>4 - C06</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.1%"></div></div><span class="doc-count">18</span></div></td></tr>
+          <tr><td><span class="acronym">PP</span>0 - Pasta Padrão PE</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span class="doc-count">0</span></div></td></tr>
+          <tr><td><span class="acronym">PP</span>0 - Pasta Padrão PSN</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span class="doc-count">0</span></div></td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="client-block">
+      <div class="client-head"><h3>Flamboyant Urbanismo — Nextgen</h3><span class="client-meta">1 projeto · 2 documentos</span></div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Projeto</th><th class="num">Documentos</th></tr></thead>
+        <tbody>
+          <tr><td><span class="acronym">TO</span>Teste - Obra</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.01%"></div></div><span class="doc-count">2</span></div></td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <footer>Fonte: Autodoc (MCP). Pastas padrão sem documento aparecem com 0.</footer>
+  </section>
+
+  <!-- CONSTRUFLOW PANEL -->
+  <section id="view-construflow" hidden>
+    <button class="back-btn" onclick="goTo('hub')">← Hub de dashboards</button>
+    <p class="eyebrow">Construflow · Pendências</p>
+    <h1>Pendências por Obra</h1>
+    <p class="subtitle">Pendências abertas e atrasadas em cada obra ativa no Construflow.</p>
+
+    <div class="kpis">
+      <div class="kpi"><div class="num">7</div><div class="label">Obras ativas</div></div>
+      <div class="kpi"><div class="num">3.808</div><div class="label">Pendências</div></div>
+      <div class="kpi warn"><div class="num">1.196</div><div class="label">Atrasadas</div></div>
+    </div>
+
+    <div class="client-block">
+      <div class="client-head"><h3>Flamboyant Urbanismo</h3><span class="client-meta">9 obras cadastradas (7 ativas)</span></div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Obra</th><th class="num">Pendências</th><th class="num">Atrasadas</th></tr></thead>
+        <tbody>
+          <tr><td>C8 - Executivo <span class="status-pill status-active">Ativa</span></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="doc-count">1.003</span></div></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill warn" style="width:100%"></div></div><span class="doc-count">753</span></div></td></tr>
+          <tr><td>Projeto Padrão <span class="status-pill status-active">Ativa</span></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:92.4%"></div></div><span class="doc-count">927</span></div></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill warn" style="width:0%"></div></div><span class="doc-count">0</span></div></td></tr>
+          <tr><td>C06 <span class="status-pill status-active">Ativa</span></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:74.3%"></div></div><span class="doc-count">745</span></div></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill warn" style="width:0%"></div></div><span class="doc-count">0</span></div></td></tr>
+          <tr><td>C18 - Antigo <span class="status-pill status-active">Ativa</span></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:35.1%"></div></div><span class="doc-count">352</span></div></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill warn" style="width:16.3%"></div></div><span class="doc-count">123</span></div></td></tr>
+          <tr><td>C18 - Executivo <span class="status-pill status-active">Ativa</span></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:32.4%"></div></div><span class="doc-count">325</span></div></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill warn" style="width:20.8%"></div></div><span class="doc-count">157</span></div></td></tr>
+          <tr><td>G05 - Antigo <span class="status-pill status-active">Ativa</span></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:23%"></div></div><span class="doc-count">231</span></div></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill warn" style="width:20.3%"></div></div><span class="doc-count">153</span></div></td></tr>
+          <tr><td>C08 - Antigo <span class="status-pill status-active">Ativa</span></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:22.4%"></div></div><span class="doc-count">225</span></div></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill warn" style="width:1.3%"></div></div><span class="doc-count">10</span></div></td></tr>
+          <tr><td>Backup <span class="status-pill status-inactive">Inativa</span></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:8.5%"></div></div><span class="doc-count">85</span></div></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill warn" style="width:0%"></div></div><span class="doc-count">0</span></div></td></tr>
+          <tr><td>Excluir <span class="status-pill status-inactive">Inativa</span></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div><span class="doc-count">80</span></div></td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill warn" style="width:0%"></div></div><span class="doc-count">0</span></div></td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <footer>Fonte: Construflow (MCP). KPIs do topo consideram apenas obras ativas.</footer>
+  </section>
+
+</div>
+
+<script>
+function goTo(view){
+  ['hub','autodoc','construflow'].forEach(function(v){
+    document.getElementById('view-'+v).hidden = (v !== view);
+  });
+  try{ localStorage.setItem('hub-last-view', view); }catch(e){}
+  window.scrollTo(0,0);
+}
+try{
+  var last = localStorage.getItem('hub-last-view');
+  if(last === 'autodoc' || last === 'construflow'){ goTo(last); }
+}catch(e){}
+</script>
+</body>
+</html>
