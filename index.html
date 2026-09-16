@@ -118,6 +118,10 @@ tr:first-child td{border-top:none;}
 .disc-detail table{font-size:0.82rem;}
 .disc-detail td, .disc-detail th{padding:7px 20px;}
 .disc-detail-head{padding:12px 20px 2px; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-soft); font-weight:600;}
+.issue-code{font-variant-numeric:tabular-nums; color:var(--ink-soft); font-size:0.82rem; margin-right:8px;}
+.issue-link{color:var(--accent); text-decoration:none; font-weight:600; font-size:0.85rem; white-space:nowrap;}
+.issue-link:hover{text-decoration:underline;}
+td.issue-title{max-width:0; width:100%;}
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Public+Sans:wght@400;500;600&display=swap">
 </head>
@@ -153,11 +157,10 @@ tr:first-child td{border-top:none;}
       </button>
 
       <button class="card" onclick="goTo('obra')">
-        <div class="card-top"><h2>Etiqueta OBRA</h2><span class="tag tag-obra">Construflow</span></div>
-        <p>Itens em aberto marcados com a etiqueta "OBRA" (chamados de obra), por obra.</p>
+        <div class="card-top"><h2>Etiqueta OBRA</h2><span class="tag tag-obra">C18 - Executivo</span></div>
+        <p>Chamados em aberto marcados com a etiqueta "OBRA" na obra C18 - Executivo.</p>
         <div class="card-nums">
           <div><div class="num">7</div><div class="lbl">Itens abertos</div></div>
-          <div><div class="num">2</div><div class="lbl">Obras c/ etiqueta</div></div>
         </div>
         <div class="card-cta">Abrir painel →</div>
       </button>
@@ -363,42 +366,30 @@ tr:first-child td{border-top:none;}
     <button class="back-btn" onclick="goTo('hub')">← Hub de dashboards</button>
     <p class="eyebrow">Construflow · Etiqueta OBRA</p>
     <h1>Chamados de Obra em Aberto</h1>
-    <p class="subtitle">Itens com a etiqueta "OBRA" (chamados feitos direto da obra) que ainda estão em aberto, por obra.</p>
+    <p class="subtitle">Itens da obra C18 - Executivo com a etiqueta "OBRA" (chamados feitos direto da obra) que ainda estão em aberto.</p>
 
     <div class="kpis">
       <div class="kpi warn"><div class="num">7</div><div class="label">Itens abertos</div></div>
-      <div class="kpi"><div class="num">2</div><div class="label">Obras com a etiqueta</div></div>
     </div>
 
     <div class="client-block">
-      <div class="client-head"><h3>Flamboyant Urbanismo</h3><span class="client-meta">Obras que usam a etiqueta OBRA</span></div>
+      <div class="client-head"><h3>C18 - Executivo</h3><span class="client-meta">7 chamados em aberto</span></div>
       <div class="table-wrap">
       <table>
-        <thead><tr><th>Obra</th><th class="num">Itens abertos c/ etiqueta OBRA</th></tr></thead>
+        <thead><tr><th>Nº</th><th>Chamado</th><th></th></tr></thead>
         <tbody>
-          <tr><td>C18 - Executivo</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill warn" style="width:100%"></div></div><span class="doc-count">7</span></div></td></tr>
-          <tr><td>G05 - Antigo</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill warn" style="width:0%"></div></div><span class="doc-count">0</span></div></td></tr>
+          <tr><td><span class="issue-code">#4913</span></td><td class="issue-title">ITEM 05 - CONSOLIDAÇÃO PE</td><td><a class="issue-link" href="https://app.construflow.com.br/workspace/project/3053/issues/1312796" target="_blank" rel="noopener">Abrir no Construflow ↗</a></td></tr>
+          <tr><td><span class="issue-code">#3753</span></td><td class="issue-title">Ponto de ralo no caixão perdido das piscinas</td><td><a class="issue-link" href="https://app.construflow.com.br/workspace/project/3053/issues/1693707" target="_blank" rel="noopener">Abrir no Construflow ↗</a></td></tr>
+          <tr><td><span class="issue-code">#2867</span></td><td class="issue-title">Divergência de informações - Pressurização Legítimo</td><td><a class="issue-link" href="https://app.construflow.com.br/workspace/project/3053/issues/1725847" target="_blank" rel="noopener">Abrir no Construflow ↗</a></td></tr>
+          <tr><td><span class="issue-code">#9517</span></td><td class="issue-title">GÁS - ponto de aquecedor</td><td><a class="issue-link" href="https://app.construflow.com.br/workspace/project/3053/issues/1728734" target="_blank" rel="noopener">Abrir no Construflow ↗</a></td></tr>
+          <tr><td><span class="issue-code">#3387</span></td><td class="issue-title">Ralos lineares de banheiros de unidades privativas</td><td><a class="issue-link" href="https://app.construflow.com.br/workspace/project/3053/issues/1733838" target="_blank" rel="noopener">Abrir no Construflow ↗</a></td></tr>
+          <tr><td><span class="issue-code">#7340</span></td><td class="issue-title">Passagem em viga - instalações elétricas</td><td><a class="issue-link" href="https://app.construflow.com.br/workspace/project/3053/issues/1741870" target="_blank" rel="noopener">Abrir no Construflow ↗</a></td></tr>
+          <tr><td><span class="issue-code">#8269</span></td><td class="issue-title">Projeto de marcação divergente do Arquitetura - Tipo Legítimo</td><td><a class="issue-link" href="https://app.construflow.com.br/workspace/project/3053/issues/1748694" target="_blank" rel="noopener">Abrir no Construflow ↗</a></td></tr>
         </tbody>
       </table>
       </div>
     </div>
-
-    <div class="client-block">
-      <div class="client-head"><h3>Sem a etiqueta configurada</h3><span class="client-meta">5 obras não usam essa etiqueta</span></div>
-      <div class="table-wrap">
-      <table>
-        <thead><tr><th>Obra</th><th class="num">Etiqueta OBRA</th></tr></thead>
-        <tbody>
-          <tr><td>C8 - Executivo</td><td class="num">Não configurada</td></tr>
-          <tr><td>Projeto Padrão</td><td class="num">Não configurada</td></tr>
-          <tr><td>C06</td><td class="num">Não configurada</td></tr>
-          <tr><td>C08 - Antigo</td><td class="num">Sem etiquetas cadastradas</td></tr>
-          <tr><td>C18 - Antigo</td><td class="num">Sem etiquetas cadastradas</td></tr>
-        </tbody>
-      </table>
-      </div>
-    </div>
-    <footer>Fonte: Construflow (MCP). "Não configurada" = a obra tem outras etiquetas mas nenhuma chamada "OBRA"; "Sem etiquetas cadastradas" = a obra não tem nenhuma etiqueta criada ainda.</footer>
+    <footer>Fonte: Construflow (MCP). Lista de itens ativos (não resolvidos) com a etiqueta "OBRA" no projeto C18 - Executivo.</footer>
   </section>
 
 </div>
