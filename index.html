@@ -104,6 +104,15 @@ tr:first-child td{border-top:none;}
 .status-pill{display:inline-block; font-size:0.65rem; padding:2px 7px; border-radius:20px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; margin-left:8px;}
 .status-active{background:var(--accent-soft); color:var(--accent);}
 .status-inactive{background:var(--track); color:var(--ink-soft);}
+.clickable-row{cursor:pointer;}
+.clickable-row:hover td{background:var(--accent-soft);}
+.row-toggle{display:inline-block; margin-right:6px; font-size:0.65rem; color:var(--ink-soft); transition:transform .15s;}
+.row-toggle.open{transform:rotate(90deg);}
+.disc-detail{border-top:1px solid var(--border); background:var(--bg);}
+.disc-detail .table-wrap{max-height:360px; overflow-y:auto;}
+.disc-detail table{font-size:0.82rem;}
+.disc-detail td, .disc-detail th{padding:7px 20px;}
+.disc-detail-head{padding:12px 20px 2px; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-soft); font-weight:600;}
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Public+Sans:wght@400;500;600&display=swap">
 </head>
@@ -163,7 +172,7 @@ tr:first-child td{border-top:none;}
       <table>
         <thead><tr><th>Projeto</th><th class="num">Documentos</th></tr></thead>
         <tbody>
-          <tr><td><span class="acronym">C18</span>1 - C18</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="doc-count">17.490</span></div></td></tr>
+          <tr class="clickable-row" onclick="toggleC18()"><td><span class="row-toggle" id="c18-toggle-icon">▸</span><span class="acronym">C18</span>1 - C18</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="doc-count">17.490</span></div></td></tr>
           <tr><td><span class="acronym">C08</span>2 - C08</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:10.3%"></div></div><span class="doc-count">1.801</span></div></td></tr>
           <tr><td><span class="acronym">G05</span>3 - G05</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:4.8%"></div></div><span class="doc-count">846</span></div></td></tr>
           <tr><td><span class="acronym">EXP</span>5 - Expansão Flamboyant Shopping</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.3%"></div></div><span class="doc-count">40</span></div></td></tr>
@@ -172,6 +181,74 @@ tr:first-child td{border-top:none;}
           <tr><td><span class="acronym">PP</span>0 - Pasta Padrão PSN</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span class="doc-count">0</span></div></td></tr>
         </tbody>
       </table>
+      </div>
+      <div id="c18-detail" class="disc-detail" hidden>
+        <p class="disc-detail-head">C18 · Documentos por disciplina</p>
+        <div class="table-wrap">
+        <table>
+          <thead><tr><th>Disciplina</th><th class="num">Documentos</th></tr></thead>
+          <tbody>
+            <tr><td>ARQ - Arquitetura</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="doc-count">2.232</span></div></td></tr>
+            <tr><td>Executivo de Alvenaria</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:95%"></div></div><span class="doc-count">2.120</span></div></td></tr>
+            <tr><td>AIT - Interiores (Mezzo)</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:77.8%"></div></div><span class="doc-count">1.737</span></div></td></tr>
+            <tr><td>EST - Estrutura</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:76.7%"></div></div><span class="doc-count">1.711</span></div></td></tr>
+            <tr><td>HSP - Esgoto</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:42.3%"></div></div><span class="doc-count">944</span></div></td></tr>
+            <tr><td>HID - Hidráulico</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:38.2%"></div></div><span class="doc-count">853</span></div></td></tr>
+            <tr><td>AIT - Interiores</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:29.9%"></div></div><span class="doc-count">668</span></div></td></tr>
+            <tr><td>INC - Incêndio</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:26.2%"></div></div><span class="doc-count">585</span></div></td></tr>
+            <tr><td>ELE - Elétrica</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:24.9%"></div></div><span class="doc-count">556</span></div></td></tr>
+            <tr><td>CLI - Climatização</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:21.2%"></div></div><span class="doc-count">473</span></div></td></tr>
+            <tr><td>IMP - Impermeabilização</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:19.7%"></div></div><span class="doc-count">440</span></div></td></tr>
+            <tr><td>FOR - Forma Pronta</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:18.8%"></div></div><span class="doc-count">420</span></div></td></tr>
+            <tr><td>PSG - Paisagismo</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:17.5%"></div></div><span class="doc-count">390</span></div></td></tr>
+            <tr><td>GAS - Gás</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:16.8%"></div></div><span class="doc-count">375</span></div></td></tr>
+            <tr><td>ESQ - Esquadrias</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:16.5%"></div></div><span class="doc-count">368</span></div></td></tr>
+            <tr><td>PRE - Pressurização</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:14.3%"></div></div><span class="doc-count">319</span></div></td></tr>
+            <tr><td>LMT - Luminotécnico</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:14%"></div></div><span class="doc-count">312</span></div></td></tr>
+            <tr><td>SIS - Sistemas</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:13.7%"></div></div><span class="doc-count">306</span></div></td></tr>
+            <tr><td>IRG - Irrigação</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:12.9%"></div></div><span class="doc-count">287</span></div></td></tr>
+            <tr><td>MET - Estrutura Metálica</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:10.5%"></div></div><span class="doc-count">234</span></div></td></tr>
+            <tr><td>ACU - Acústico</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:9.4%"></div></div><span class="doc-count">209</span></div></td></tr>
+            <tr><td>FUR - Furação</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:9.3%"></div></div><span class="doc-count">208</span></div></td></tr>
+            <tr><td>ASP - Aspiração</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="doc-count">200</span></div></td></tr>
+            <tr><td>FUN - Fundações</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:8.8%"></div></div><span class="doc-count">196</span></div></td></tr>
+            <tr><td>EXA - Exaustão</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:7.5%"></div></div><span class="doc-count">168</span></div></td></tr>
+            <tr><td>FAC - Fachada</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:7.5%"></div></div><span class="doc-count">168</span></div></td></tr>
+            <tr><td>SPDA</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:6.5%"></div></div><span class="doc-count">146</span></div></td></tr>
+            <tr><td>00 - Documentos</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:4.8%"></div></div><span class="doc-count">107</span></div></td></tr>
+            <tr><td>MPK - Markup</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:4.4%"></div></div><span class="doc-count">98</span></div></td></tr>
+            <tr><td>ELD - Detecção e Alarme</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:2.7%"></div></div><span class="doc-count">61</span></div></td></tr>
+            <tr><td>GER - Gerenciamento</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:2.6%"></div></div><span class="doc-count">59</span></div></td></tr>
+            <tr><td>GAR - Garagem</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:2.2%"></div></div><span class="doc-count">48</span></div></td></tr>
+            <tr><td>FUN (SCCAP)</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:1.9%"></div></div><span class="doc-count">43</span></div></td></tr>
+            <tr><td>PSN - Personalização</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:1.9%"></div></div><span class="doc-count">42</span></div></td></tr>
+            <tr><td>DES - Desempenho NBR 15575</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:1.5%"></div></div><span class="doc-count">34</span></div></td></tr>
+            <tr><td>CVI - Comunicação Visual</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:1.3%"></div></div><span class="doc-count">29</span></div></td></tr>
+            <tr><td>Piscina</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:1.1%"></div></div><span class="doc-count">24</span></div></td></tr>
+            <tr><td>Estrutura Metálica</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.9%"></div></div><span class="doc-count">21</span></div></td></tr>
+            <tr><td>PLA - Planialtimétrico</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.9%"></div></div><span class="doc-count">20</span></div></td></tr>
+            <tr><td>HSP - Esgoto San./Pluvial</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.6%"></div></div><span class="doc-count">14</span></div></td></tr>
+            <tr><td>00 - Documentos Gerais</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.6%"></div></div><span class="doc-count">13</span></div></td></tr>
+            <tr><td>Hidráulica</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.5%"></div></div><span class="doc-count">12</span></div></td></tr>
+            <tr><td>CAM - Consultoria Ambiental</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.5%"></div></div><span class="doc-count">11</span></div></td></tr>
+            <tr><td>INT - Interação Solo-Estrutura</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.4%"></div></div><span class="doc-count">10</span></div></td></tr>
+            <tr><td>ATE - ATP Estrutura</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.4%"></div></div><span class="doc-count">9</span></div></td></tr>
+            <tr><td>CON - Contenção</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.4%"></div></div><span class="doc-count">8</span></div></td></tr>
+            <tr><td>EAN - Executivo de Ancoragem</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.4%"></div></div><span class="doc-count">8</span></div></td></tr>
+            <tr><td>CGA - Certificação</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.3%"></div></div><span class="doc-count">7</span></div></td></tr>
+            <tr><td>SON - Sondagem</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.3%"></div></div><span class="doc-count">7</span></div></td></tr>
+            <tr><td>TUN - Túnel de Vento</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.3%"></div></div><span class="doc-count">7</span></div></td></tr>
+            <tr><td>ATF - ATP Fundação</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.2%"></div></div><span class="doc-count">5</span></div></td></tr>
+            <tr><td>SFT - Fotovoltaico</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.2%"></div></div><span class="doc-count">4</span></div></td></tr>
+            <tr><td>ACE - Acessibilidade</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.2%"></div></div><span class="doc-count">4</span></div></td></tr>
+            <tr><td>LUM - Lumínico</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.1%"></div></div><span class="doc-count">3</span></div></td></tr>
+            <tr><td>TER - Térmico</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.1%"></div></div><span class="doc-count">3</span></div></td></tr>
+            <tr><td>BIM - Coordenação BIM</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.1%"></div></div><span class="doc-count">3</span></div></td></tr>
+            <tr><td>HGA - Gás</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.1%"></div></div><span class="doc-count">2</span></div></td></tr>
+            <tr><td>ELV - Elevador</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:0.1%"></div></div><span class="doc-count">2</span></div></td></tr>
+          </tbody>
+        </table>
+        </div>
       </div>
     </div>
 
@@ -227,6 +304,13 @@ tr:first-child td{border-top:none;}
 </div>
 
 <script>
+function toggleC18(){
+  var d = document.getElementById('c18-detail');
+  var icon = document.getElementById('c18-toggle-icon');
+  d.hidden = !d.hidden;
+  icon.textContent = d.hidden ? '▸' : '▾';
+  icon.classList.toggle('open', !d.hidden);
+}
 function goTo(view){
   ['hub','autodoc','construflow'].forEach(function(v){
     document.getElementById('view-'+v).hidden = (v !== view);
